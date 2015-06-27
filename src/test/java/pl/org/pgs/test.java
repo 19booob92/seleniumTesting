@@ -4,6 +4,7 @@ import static pl.org.pgs.action.LoginAction.fillCaptcha;
 import static pl.org.pgs.action.LoginAction.goLoginPage;
 import static pl.org.pgs.action.LoginAction.goWrongLoginPage;
 import static pl.org.pgs.action.LoginAction.login;
+import static pl.org.pgs.action.MainPageAction.goAddPhasePage;
 import static pl.org.pgs.action.MainPageAction.goEnviromentsListPage;
 import static pl.org.pgs.action.MainPageAction.sortByDescriptionPossible;
 import static pl.org.pgs.util.MainPage.isMainPageLoaded;
@@ -16,6 +17,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import pl.org.pgs.action.AbstractAction;
+import pl.org.pgs.action.MainPageAction;
 
 public class test {
 
@@ -78,6 +80,19 @@ public class test {
 		goEnviromentsListPage(driver);
 
 		Assertions.assertThat(sortByDescriptionPossible(driver)).isFalse();
+
+	}
+
+	@Test
+	public void shouldNotBePossibleToAddPhaseWithDateToBeforeDateFromID289() {
+
+		goLoginPage(driver);
+		login(driver, data.getAdminLogin(), data.getAdminPassword());
+
+		goAddPhasePage(driver);
+		MainPageAction
+
+		Assertions.assertThat().isFalse();
 
 	}
 

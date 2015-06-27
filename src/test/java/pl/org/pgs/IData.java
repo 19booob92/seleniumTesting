@@ -18,4 +18,8 @@ public interface IData {
 	public default String getEnviromentsListUrl() {
 		return getUrl() + "/environments";
 	}
+
+	public default String getAddPhaseUrl() {
+		return getUrl() + "/add_phase";
+	}
 }
