@@ -30,9 +30,9 @@ import pl.org.pgs.action.DriverOperator;
 public class test {
 
 	WebDriver driver;
-	// IData data = MrBuggyData.getInstance();
+	IData data = MrBuggyData.getInstance();
 
-	IData data = TeatAreaData.getInstance();
+	// IData data = TeatAreaData.getInstance();
 
 	@Before
 	public void setUp() {
@@ -151,6 +151,21 @@ public class test {
 		goToEditViewOfFirstRole();
 
 		assertThat(isSelectAllCheckboxLabelPresentRoles()).isTrue();
+	}
+
+	@Test
+	public void shoulCookieSessionBeHttpOnlyID278() {
+
+		driver.manage().deleteAllCookies();
+
+		goLoginPage();
+
+		fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
+
+		// driver.manage().getCookies().stream().filter((c) ->
+		// c.isHttpOnly()).forEach((c) -> System.out.println(c.toString()));
+
+		assertThat(driver.manage().getCookieNamed("FrameProfile").isHttpOnly()).isTrue();
 	}
 
 }
