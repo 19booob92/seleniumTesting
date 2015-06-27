@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 
 public class LoginAction extends AbstractAction {
 
-	public static void login(String login, String password) {
+	public static void fillLoginFormularAndSubmit(String login, String password) {
 
 		// driver.get(data.getLoginUrl());
 
@@ -15,6 +15,10 @@ public class LoginAction extends AbstractAction {
 		driver.findElement(id("email")).sendKeys(login);
 		driver.findElement(id("password")).sendKeys(password);
 
+		submitLogin();
+	}
+
+	public static void submitLogin() {
 		driver.findElement(id("login")).click();
 	}
 

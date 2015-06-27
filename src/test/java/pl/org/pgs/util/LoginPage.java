@@ -28,4 +28,11 @@ public class LoginPage extends DriverOperator {
 
 		return element != null;
 	}
+
+	public static boolean areOnlyTwoErrorMessagesPresent() {
+
+		return driver
+				.findElements(By.xpath("//div[@class='login_form_error']"))
+				.size() == 2;
+	}
 }

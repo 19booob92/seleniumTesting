@@ -4,11 +4,13 @@ import static org.assertj.core.api.StrictAssertions.assertThat;
 import static pl.org.pgs.action.LoginAction.clickRecoverPassword;
 import static pl.org.pgs.action.LoginAction.clickRemindPassword;
 import static pl.org.pgs.action.LoginAction.fillCaptcha;
+import static pl.org.pgs.action.LoginAction.fillLoginFormularAndSubmit;
 import static pl.org.pgs.action.LoginAction.goLoginPage;
 import static pl.org.pgs.action.LoginAction.goWrongLoginPage;
-import static pl.org.pgs.action.LoginAction.login;
+import static pl.org.pgs.action.LoginAction.submitLogin;
 import static pl.org.pgs.action.MainPageAction.goEnviromentsListPage;
 import static pl.org.pgs.action.MainPageAction.sortByDescriptionPossible;
+import static pl.org.pgs.util.LoginPage.areOnlyTwoErrorMessagesPresent;
 import static pl.org.pgs.util.LoginPage.isBackButtonPresent;
 import static pl.org.pgs.util.LoginPage.isRecoveryPasswordCaptchaCorrectMessage;
 import static pl.org.pgs.util.MainPage.isMainPageLoaded;
@@ -45,7 +47,8 @@ public class test {
 	public void shouldLoginSuccessfully() {
 
 		goLoginPage();
-		login(data.getAdminLogin(), data.getAdminPassword());
+
+		fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
 
 		assertThat(isMainPageLoaded()).isTrue();
 	}
@@ -55,13 +58,13 @@ public class test {
 
 		goLoginPage();
 
-		login(data.getWrongLogin(), data.getWrongPassword());
-		login(data.getWrongLogin(), data.getWrongPassword());
-		login(data.getWrongLogin(), data.getWrongPassword());
+		fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
+		fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
+		fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
 
 		fillCaptcha("");
 
-		login(data.getAdminLogin(), data.getAdminPassword());
+		fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
 
 		assertThat(isMainPageLoaded()).isFalse();
 	}
@@ -72,19 +75,18 @@ public class test {
 		goWrongLoginPage();
 
 		assertThat(isMainPageLoaded()).isFalse();
-
 	}
 
 	@Test
 	public void shoulSortEnviromentByDescriptionID218() {
 
 		goLoginPage();
-		login(data.getAdminLogin(), data.getAdminPassword());
+
+		fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
 
 		goEnviromentsListPage();
 
 		assertThat(sortByDescriptionPossible()).isFalse();
-
 	}
 
 	@Test
@@ -92,13 +94,13 @@ public class test {
 
 		goLoginPage();
 
-		login(data.getWrongLogin(), data.getWrongPassword());
-		login(data.getWrongLogin(), data.getWrongPassword());
-		login(data.getWrongLogin(), data.getWrongPassword());
+		fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
+		fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
+		fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
 
 		goLoginPage();
 
-		login(data.getAdminLogin(), data.getAdminPassword());
+		fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
 
 		assertThat(isMainPageLoaded()).isFalse();
 	}
@@ -125,9 +127,13 @@ public class test {
 	}
 
 	@Test
-	public void shouldBe() {
-		// TODO Auto-generated method stub
+	public void shouldWrongMessageNotBePresentID260() {
 
+		goLoginPage();
+
+		submitLogin();
+
+		assertThat(areOnlyTwoErrorMessagesPresent()).isTrue();
 	}
 
 }
