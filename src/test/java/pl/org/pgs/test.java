@@ -1,6 +1,13 @@
 package pl.org.pgs;
 
 import static org.openqa.selenium.By.id;
+import static pl.org.pgs.Data.adminLogin;
+import static pl.org.pgs.Data.adminPassword;
+import static pl.org.pgs.Data.wrongLogin;
+import static pl.org.pgs.Data.wrongPassword;
+import static pl.org.pgs.action.LoginAction.fillCaptcha;
+import static pl.org.pgs.action.LoginAction.login;
+import static pl.org.pgs.util.MainPage.isMainPageLoaded;
 import junit.framework.TestCase;
 
 import org.assertj.core.api.Assertions;
@@ -13,6 +20,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.WebDriver;
 
 import pl.org.pgs.action.LoginAction;
+import pl.org.pgs.util.MainPage;
 
 public class test {
 
@@ -31,11 +39,23 @@ public class test {
 	@Test
 	public void shouldLoginSuccessfully() {
 
-		LoginAction.login(driver, "admin@tc2014.pl", "12qwAS");
+		login(driver, adminLogin, adminPassword);
 
-		WebElement headerLogo = driver.findElement(id("header_logo"));
+		Assertions.assertThat(isMainPageLoaded(driver)).isTrue();
+	}
 
-		Assertions.assertThat(headerLogo).isNotNull();
+	@Test
+	public void shouldNotLoginAfter3FailsWithoutCaptchaID268() {
+
+		login(driver, wrongLogin, wrongPassword);
+		login(driver, wrongLogin, wrongPassword);
+		login(driver, wrongLogin, wrongPassword);
+
+		fillCaptcha(driver, "");
+
+		login(driver, adminLogin, adminPassword);
+
+		Assertions.assertThat(isMainPageLoaded(driver)).isFalse();
 	}
 
 }

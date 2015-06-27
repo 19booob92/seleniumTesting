@@ -16,4 +16,9 @@ public class LoginAction {
 
 		driver.findElement(id("login")).click();
 	}
+
+	public static void fillCaptcha(WebDriver driver, String text) {
+
+		driver.findElement(id("captcha-input")).sendKeys(text);
+	}
 }
