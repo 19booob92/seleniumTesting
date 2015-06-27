@@ -3,12 +3,13 @@ package pl.org.pgs.util;
 import static org.openqa.selenium.By.id;
 
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class MainPage {
+import pl.org.pgs.action.DriverOperator;
 
-	public static boolean isMainPageLoaded (WebDriver driver) {
+public class MainPage extends DriverOperator {
+
+	public static boolean isMainPageLoaded() {
 
 		WebElement headerLogo = null;
 

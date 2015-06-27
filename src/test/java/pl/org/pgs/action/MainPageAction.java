@@ -4,22 +4,21 @@ import static org.openqa.selenium.By.xpath;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class MainPageAction extends AbstractAction {
 
-	public static void goEnviromentsListPage(WebDriver driver) {
+	public static void goEnviromentsListPage() {
 
 		driver.get(data.getEnviromentsListUrl());
 	}
 
-	public static void goAddPhasePage(WebDriver driver) {
+	public static void goAddPhasePage() {
 
 		driver.get(data.getAddPhaseUrl());
 	}
 
-	public static boolean sortByDescriptionPossible(WebDriver driver) {
+	public static boolean sortByDescriptionPossible() {
 
 		WebElement element = null;
 
@@ -32,7 +31,7 @@ public class MainPageAction extends AbstractAction {
 		return element != null;
 	}
 
-	public static void fillPhaseFormular(WebDriver driver, String name,
+	public static void fillPhaseFormular(String name,
 			String startDate, String endDate) {
 
 		driver.findElement(By.id("name")).sendKeys(endDate);

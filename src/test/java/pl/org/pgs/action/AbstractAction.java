@@ -2,7 +2,7 @@ package pl.org.pgs.action;
 
 import pl.org.pgs.IData;
 
-public abstract class AbstractAction {
+public abstract class AbstractAction extends DriverOperator {
 
 	protected static IData data;
 

@@ -20,6 +20,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import pl.org.pgs.action.AbstractAction;
+import pl.org.pgs.action.DriverOperator;
 
 public class test {
 
@@ -32,6 +33,7 @@ public class test {
 	public void setUp() {
 		driver = new FirefoxDriver();
 		AbstractAction.setData(data);
+		DriverOperator.setDriver(driver);
 	}
 
 	@After
@@ -42,84 +44,90 @@ public class test {
 	// @Test
 	public void shouldLoginSuccessfully() {
 
-		goLoginPage(driver);
-		login(driver, data.getAdminLogin(), data.getAdminPassword());
+		goLoginPage();
+		login(data.getAdminLogin(), data.getAdminPassword());
 
-		assertThat(isMainPageLoaded(driver)).isTrue();
+		assertThat(isMainPageLoaded()).isTrue();
 	}
 
 	@Test
 	public void shouldNotLoginAfter3FailsWithoutCaptchaID268() {
 
-		goLoginPage(driver);
+		goLoginPage();
 
-		login(driver, data.getWrongLogin(), data.getWrongPassword());
-		login(driver, data.getWrongLogin(), data.getWrongPassword());
-		login(driver, data.getWrongLogin(), data.getWrongPassword());
+		login(data.getWrongLogin(), data.getWrongPassword());
+		login(data.getWrongLogin(), data.getWrongPassword());
+		login(data.getWrongLogin(), data.getWrongPassword());
 
-		fillCaptcha(driver, "");
+		fillCaptcha("");
 
-		login(driver, data.getAdminLogin(), data.getAdminPassword());
+		login(data.getAdminLogin(), data.getAdminPassword());
 
-		assertThat(isMainPageLoaded(driver)).isFalse();
+		assertThat(isMainPageLoaded()).isFalse();
 	}
 
 	@Test
 	public void shoulReturn404StatusID272() {
 
-		goWrongLoginPage(driver);
+		goWrongLoginPage();
 
-		assertThat(isMainPageLoaded(driver)).isFalse();
+		assertThat(isMainPageLoaded()).isFalse();
 
 	}
 
 	@Test
 	public void shoulSortEnviromentByDescriptionID218() {
 
-		goLoginPage(driver);
-		login(driver, data.getAdminLogin(), data.getAdminPassword());
+		goLoginPage();
+		login(data.getAdminLogin(), data.getAdminPassword());
 
-		goEnviromentsListPage(driver);
+		goEnviromentsListPage();
 
-		assertThat(sortByDescriptionPossible(driver)).isFalse();
+		assertThat(sortByDescriptionPossible()).isFalse();
 
 	}
 
 	@Test
 	public void shouldNotLoginAfter3FailsWithoutCaptchaAfterChangingUrlID269() {
 
-		goLoginPage(driver);
+		goLoginPage();
 
-		login(driver, data.getWrongLogin(), data.getWrongPassword());
-		login(driver, data.getWrongLogin(), data.getWrongPassword());
-		login(driver, data.getWrongLogin(), data.getWrongPassword());
+		login(data.getWrongLogin(), data.getWrongPassword());
+		login(data.getWrongLogin(), data.getWrongPassword());
+		login(data.getWrongLogin(), data.getWrongPassword());
 
-		goLoginPage(driver);
+		goLoginPage();
 
-		login(driver, data.getAdminLogin(), data.getAdminPassword());
+		login(data.getAdminLogin(), data.getAdminPassword());
 
-		assertThat(isMainPageLoaded(driver)).isFalse();
+		assertThat(isMainPageLoaded()).isFalse();
 	}
 
 	@Test
 	public void shouldBeCorrectMessageAtRememberPasswordCaptchaID280() {
 
-		goLoginPage(driver);
+		goLoginPage();
 
-		clickRemindPassword(driver);
-		clickRecoverPassword(driver);
+		clickRemindPassword();
+		clickRecoverPassword();
 
-		assertThat(isRecoveryPasswordCaptchaCorrectMessage(driver)).isTrue();
+		assertThat(isRecoveryPasswordCaptchaCorrectMessage()).isTrue();
 	}
 
 	@Test
 	public void shouldBeBackButtonID290() {
 
-		goLoginPage(driver);
+		goLoginPage();
 
-		clickRemindPassword(driver);
+		clickRemindPassword();
 
-		assertThat(isBackButtonPresent(driver)).isTrue();
+		assertThat(isBackButtonPresent()).isTrue();
+	}
+
+	@Test
+	public void shouldBe() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

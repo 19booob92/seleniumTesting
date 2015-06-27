@@ -3,11 +3,10 @@ package pl.org.pgs.action;
 import static org.openqa.selenium.By.id;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 public class LoginAction extends AbstractAction {
 
-	public static void login(WebDriver driver, String login, String password) {
+	public static void login(String login, String password) {
 
 		// driver.get(data.getLoginUrl());
 
@@ -19,28 +18,28 @@ public class LoginAction extends AbstractAction {
 		driver.findElement(id("login")).click();
 	}
 
-	public static void fillCaptcha(WebDriver driver, String text) {
+	public static void fillCaptcha(String text) {
 
 		driver.findElement(id("captcha-input")).sendKeys(text);
 	}
 
-	public static void clickRemindPassword(WebDriver driver) {
+	public static void clickRemindPassword() {
 
 		driver.findElement(By.xpath("//div[@class='remember_check']/a[1]"))
 				.click();
 	}
 
-	public static void clickRecoverPassword(WebDriver driver) {
+	public static void clickRecoverPassword() {
 
 		driver.findElement(By.id("recover")).click();
 	}
 
-	public static void goWrongLoginPage(WebDriver driver) {
+	public static void goWrongLoginPage() {
 
 		driver.get(data.getUrl() + "/ZALOGUJ");
 	}
 
-	public static void goLoginPage(WebDriver driver) {
+	public static void goLoginPage() {
 
 		driver.get(data.getLoginUrl());
 	}

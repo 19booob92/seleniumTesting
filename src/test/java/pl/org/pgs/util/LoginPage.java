@@ -2,12 +2,13 @@ package pl.org.pgs.util;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class LoginPage {
+import pl.org.pgs.action.DriverOperator;
 
-	public static boolean isRecoveryPasswordCaptchaCorrectMessage(WebDriver driver) {
+public class LoginPage extends DriverOperator {
+
+	public static boolean isRecoveryPasswordCaptchaCorrectMessage() {
 
 		return driver
 				.findElements(By.xpath("//div[@class='login_form_error']"))
@@ -15,7 +16,7 @@ public class LoginPage {
 				.getText().equals("Proszę poprawnie uzupełnić pole captcha.");
 	}
 
-	public static boolean isBackButtonPresent(WebDriver driver) {
+	public static boolean isBackButtonPresent() {
 
 		WebElement element = null;
 
