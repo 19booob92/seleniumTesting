@@ -15,6 +15,7 @@ public class MainPage {
 		try {
 			headerLogo = driver.findElement(id("header_logo"));
 		} catch (NoSuchElementException e) {
+			System.out.println(e.getMessage());
 			return false;
 		}
 

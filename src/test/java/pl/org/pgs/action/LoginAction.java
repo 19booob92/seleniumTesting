@@ -12,7 +12,9 @@ public class LoginAction {
 
 	public static void login(WebDriver driver, String login, String password) {
 
-		driver.get(data.getUrl());
+		// driver.get(data.getLoginUrl());
+
+		driver.findElement(id("email")).clear();
 
 		driver.findElement(id("email")).sendKeys(login);
 		driver.findElement(id("password")).sendKeys(password);
@@ -23,6 +25,16 @@ public class LoginAction {
 	public static void fillCaptcha(WebDriver driver, String text) {
 
 		driver.findElement(id("captcha-input")).sendKeys(text);
+	}
+
+	public static void goWrongLoginPage(WebDriver driver) {
+
+		driver.get(data.getUrl() + "/ZALOGUJ");
+	}
+
+	public static void goLoginPage(WebDriver driver) {
+
+		driver.get(data.getLoginUrl());
 	}
 
 	public static void setIData(IData d) {
