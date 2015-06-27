@@ -2,6 +2,7 @@ package pl.org.pgs.action;
 
 import static org.openqa.selenium.By.id;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class LoginAction extends AbstractAction {
@@ -21,6 +22,17 @@ public class LoginAction extends AbstractAction {
 	public static void fillCaptcha(WebDriver driver, String text) {
 
 		driver.findElement(id("captcha-input")).sendKeys(text);
+	}
+
+	public static void clickRemindPassword(WebDriver driver) {
+
+		driver.findElement(By.xpath("//div[@class='remember_check']/a[1]"))
+				.click();
+	}
+
+	public static void clickRecoverPassword(WebDriver driver) {
+
+		driver.findElement(By.id("recover")).click();
 	}
 
 	public static void goWrongLoginPage(WebDriver driver) {

@@ -37,8 +37,6 @@ public class MainPageAction extends AbstractAction {
 
 		driver.findElement(By.id("name")).sendKeys(endDate);
 
-		
-
 		driver.findElement(By.id("startDate")).sendKeys(startDate);
 		driver.findElement(By.id("endDate")).sendKeys(endDate);
 

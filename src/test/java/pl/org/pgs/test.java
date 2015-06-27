@@ -1,11 +1,14 @@
 package pl.org.pgs;
 
+import static pl.org.pgs.action.LoginAction.clickRecoverPassword;
+import static pl.org.pgs.action.LoginAction.clickRemindPassword;
 import static pl.org.pgs.action.LoginAction.fillCaptcha;
 import static pl.org.pgs.action.LoginAction.goLoginPage;
 import static pl.org.pgs.action.LoginAction.goWrongLoginPage;
 import static pl.org.pgs.action.LoginAction.login;
 import static pl.org.pgs.action.MainPageAction.goEnviromentsListPage;
 import static pl.org.pgs.action.MainPageAction.sortByDescriptionPossible;
+import static pl.org.pgs.util.LoginPage.isRecoveryPasswordCaptchaCorrectMessage;
 import static pl.org.pgs.util.MainPage.isMainPageLoaded;
 
 import org.assertj.core.api.Assertions;
@@ -16,6 +19,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import pl.org.pgs.action.AbstractAction;
+import pl.org.pgs.action.LoginAction;
+import pl.org.pgs.util.LoginPage;
 
 public class test {
 
@@ -95,6 +100,17 @@ public class test {
 		login(driver, data.getAdminLogin(), data.getAdminPassword());
 
 		Assertions.assertThat(isMainPageLoaded(driver)).isFalse();
+	}
+
+	@Test
+	public void shouldBeCorrectMessageAtRememberPasswordCaptchaID280() {
+
+		goLoginPage(driver);
+
+		clickRemindPassword(driver);
+		clickRecoverPassword(driver);
+
+		Assertions.assertThat(isRecoveryPasswordCaptchaCorrectMessage(driver)).isTrue();
 	}
 
 }
