@@ -128,4 +128,14 @@ public class MainPageAction extends AbstractAction {
         driver.findElement(By.className("j_delete_release")).click();
         driver.findElement(By.className("ui-button-text")).click();
     }
+
+    public static void goToAccountPage() {
+        driver.findElements(By.className("avatar_header")).get(1).click();
+    }
+
+    public static void goToEditPage() {
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.findElement(By.className("button_link")).click();
+    }
+
 }

@@ -22,6 +22,15 @@ import static pl.org.pgs.util.LoginPage.isBackButtonPresent;
 import static pl.org.pgs.util.LoginPage.isRecoveryPasswordCaptchaCorrectMessage;
 import static pl.org.pgs.util.MainPage.isMainPageLoaded;
 import static pl.org.pgs.util.MainPage.isSelectAllCheckboxLabelPresentRoles;
+import static pl.org.pgs.action.MainPageAction.clickOnMenuItem;
+import static pl.org.pgs.action.MainPageAction.clickOnAddButton;
+import static pl.org.pgs.action.MainPageAction.fillFormInRelasesAndSubmit;
+import static pl.org.pgs.action.MainPageAction.deleteRelase;
+import static pl.org.pgs.action.MainPageAction.goToEditPage;
+import static pl.org.pgs.action.MainPageAction.goToAccountPage;
+import static pl.org.pgs.action.MainPageAction.fillPhaseFormularAndSubmit;
+
+import com.sun.xml.internal.bind.v2.util.EditDistance;
 import junit.framework.Assert;
 
 import org.junit.After;
@@ -35,6 +44,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import pl.org.pgs.action.AbstractAction;
 import pl.org.pgs.action.DriverOperator;
 import pl.org.pgs.action.MainPageAction;
+
+import java.util.List;
 
 public class test {
 
@@ -244,5 +255,20 @@ public class test {
 		assertThat(driver.manage().getCookieNamed("FrameProfile").isHttpOnly())
 				.isTrue();
 	}
+
+    @Test
+    public void editingEmailIsImposible() throws InterruptedException {
+        goLoginPage();
+
+        fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
+
+        goToAccountPage();
+
+        goToEditPage();
+
+        List<WebElement> editInputs = driver.findElements(By.cssSelector("label"));
+
+        Assert.assertEquals(5, editInputs.size());
+    }
 
 }
