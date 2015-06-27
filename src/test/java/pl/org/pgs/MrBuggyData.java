@@ -34,7 +34,7 @@ public class MrBuggyData implements IData {
 
 	@Override
 	public String getLoginUrl() {
-		return url + "/logowanie";
+		return url + "/zaloguj";
 	}
 
 }
