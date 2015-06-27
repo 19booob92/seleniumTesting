@@ -9,11 +9,14 @@ import static pl.org.pgs.action.LoginAction.goLoginPage;
 import static pl.org.pgs.action.LoginAction.goWrongLoginPage;
 import static pl.org.pgs.action.LoginAction.submitLogin;
 import static pl.org.pgs.action.MainPageAction.goEnviromentsListPage;
+import static pl.org.pgs.action.MainPageAction.goRoleListPage;
+import static pl.org.pgs.action.MainPageAction.goToEditViewOfFirstRole;
 import static pl.org.pgs.action.MainPageAction.sortByDescriptionPossible;
 import static pl.org.pgs.util.LoginPage.areOnlyTwoErrorMessagesPresent;
 import static pl.org.pgs.util.LoginPage.isBackButtonPresent;
 import static pl.org.pgs.util.LoginPage.isRecoveryPasswordCaptchaCorrectMessage;
 import static pl.org.pgs.util.MainPage.isMainPageLoaded;
+import static pl.org.pgs.util.MainPage.isSelectAllCheckboxLabelPresentRoles;
 
 import org.junit.After;
 import org.junit.Before;
@@ -27,9 +30,9 @@ import pl.org.pgs.action.DriverOperator;
 public class test {
 
 	WebDriver driver;
-	IData data = MrBuggyData.getInstance();
+	// IData data = MrBuggyData.getInstance();
 
-	// IData data = TeatAreaData.getInstance();
+	IData data = TeatAreaData.getInstance();
 
 	@Before
 	public void setUp() {
@@ -134,6 +137,20 @@ public class test {
 		submitLogin();
 
 		assertThat(areOnlyTwoErrorMessagesPresent()).isTrue();
+	}
+
+	@Test
+	public void shouldBeLabbelSelectAllID294() {
+
+		goLoginPage();
+
+		fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
+
+		goRoleListPage();
+
+		goToEditViewOfFirstRole();
+
+		assertThat(isSelectAllCheckboxLabelPresentRoles()).isTrue();
 	}
 
 }

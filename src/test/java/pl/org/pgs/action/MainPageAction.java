@@ -13,6 +13,11 @@ public class MainPageAction extends AbstractAction {
 		driver.get(data.getEnviromentsListUrl());
 	}
 
+	public static void goRoleListPage() {
+
+		driver.get(data.getRoleListUrl());
+	}
+
 	public static void goAddPhasePage() {
 
 		driver.get(data.getAddPhaseUrl());
@@ -39,5 +44,12 @@ public class MainPageAction extends AbstractAction {
 		driver.findElement(By.id("startDate")).sendKeys(startDate);
 		driver.findElement(By.id("endDate")).sendKeys(endDate);
 
+	}
+
+	public static void goToEditViewOfFirstRole() {
+
+		driver.findElement(By.id("action_icon")).click();
+		driver//.findElement(By.id("action_icon"))
+				.findElement(By.xpath("//div[@class='collapse']/ul/li[1]/a")).click();
 	}
 }

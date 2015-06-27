@@ -22,4 +22,8 @@ public interface IData {
 	public default String getAddPhaseUrl() {
 		return getUrl() + "/add_phase";
 	}
+
+	public default String getRoleListUrl() {
+		return getUrl() + "/administration/role_list";
+	}
 }
