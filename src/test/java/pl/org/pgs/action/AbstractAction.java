@@ -6,7 +6,7 @@ public abstract class AbstractAction {
 
 	protected static IData data;
 
-	public static void setIData(IData d) {
+	public static void setData(IData d) {
 		data = d;
 	}
 

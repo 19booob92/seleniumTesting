@@ -1,5 +1,6 @@
 package pl.org.pgs;
 
+import static org.assertj.core.api.StrictAssertions.assertThat;
 import static pl.org.pgs.action.LoginAction.clickRecoverPassword;
 import static pl.org.pgs.action.LoginAction.clickRemindPassword;
 import static pl.org.pgs.action.LoginAction.fillCaptcha;
@@ -8,10 +9,10 @@ import static pl.org.pgs.action.LoginAction.goWrongLoginPage;
 import static pl.org.pgs.action.LoginAction.login;
 import static pl.org.pgs.action.MainPageAction.goEnviromentsListPage;
 import static pl.org.pgs.action.MainPageAction.sortByDescriptionPossible;
+import static pl.org.pgs.util.LoginPage.isBackButtonPresent;
 import static pl.org.pgs.util.LoginPage.isRecoveryPasswordCaptchaCorrectMessage;
 import static pl.org.pgs.util.MainPage.isMainPageLoaded;
 
-import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,8 +20,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import pl.org.pgs.action.AbstractAction;
-import pl.org.pgs.action.LoginAction;
-import pl.org.pgs.util.LoginPage;
 
 public class test {
 
@@ -32,7 +31,7 @@ public class test {
 	@Before
 	public void setUp() {
 		driver = new FirefoxDriver();
-		AbstractAction.setIData(data);
+		AbstractAction.setData(data);
 	}
 
 	@After
@@ -46,7 +45,7 @@ public class test {
 		goLoginPage(driver);
 		login(driver, data.getAdminLogin(), data.getAdminPassword());
 
-		Assertions.assertThat(isMainPageLoaded(driver)).isTrue();
+		assertThat(isMainPageLoaded(driver)).isTrue();
 	}
 
 	@Test
@@ -62,7 +61,7 @@ public class test {
 
 		login(driver, data.getAdminLogin(), data.getAdminPassword());
 
-		Assertions.assertThat(isMainPageLoaded(driver)).isFalse();
+		assertThat(isMainPageLoaded(driver)).isFalse();
 	}
 
 	@Test
@@ -70,7 +69,7 @@ public class test {
 
 		goWrongLoginPage(driver);
 
-		Assertions.assertThat(isMainPageLoaded(driver)).isFalse();
+		assertThat(isMainPageLoaded(driver)).isFalse();
 
 	}
 
@@ -82,7 +81,7 @@ public class test {
 
 		goEnviromentsListPage(driver);
 
-		Assertions.assertThat(sortByDescriptionPossible(driver)).isFalse();
+		assertThat(sortByDescriptionPossible(driver)).isFalse();
 
 	}
 
@@ -99,7 +98,7 @@ public class test {
 
 		login(driver, data.getAdminLogin(), data.getAdminPassword());
 
-		Assertions.assertThat(isMainPageLoaded(driver)).isFalse();
+		assertThat(isMainPageLoaded(driver)).isFalse();
 	}
 
 	@Test
@@ -110,7 +109,17 @@ public class test {
 		clickRemindPassword(driver);
 		clickRecoverPassword(driver);
 
-		Assertions.assertThat(isRecoveryPasswordCaptchaCorrectMessage(driver)).isTrue();
+		assertThat(isRecoveryPasswordCaptchaCorrectMessage(driver)).isTrue();
+	}
+
+	@Test
+	public void shouldBeBackButtonID290() {
+
+		goLoginPage(driver);
+
+		clickRemindPassword(driver);
+
+		assertThat(isBackButtonPresent(driver)).isTrue();
 	}
 
 }
