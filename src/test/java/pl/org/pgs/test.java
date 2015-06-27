@@ -36,6 +36,7 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -268,7 +269,7 @@ public class test {
 
         List<WebElement> editInputs = driver.findElements(By.cssSelector("label"));
 
-        Assert.assertEquals(5, editInputs.size());
+        Assert.assertEquals(6, editInputs.size());
     }
 
 }
