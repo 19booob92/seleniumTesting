@@ -20,8 +20,10 @@ import static pl.org.pgs.util.MainPage.isSelectAllCheckboxLabelPresentRoles;
 import static pl.org.pgs.action.MainPageAction.clickOnMenuItem;
 import static pl.org.pgs.action.MainPageAction.clickOnAddButton;
 import static pl.org.pgs.action.MainPageAction.fillFormInRelasesAndSubmit;
+import static pl.org.pgs.action.MainPageAction.deleteRelase;
 import static pl.org.pgs.action.MainPageAction.fillPhaseFormularAndSubmit;
 
+import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -178,11 +180,38 @@ public class test {
 
 		fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
 
-		goRoleListPage();
+        goRoleListPage();
 
-		goToEditViewOfFirstRole();
+        goToEditViewOfFirstRole();
 
-		assertThat(isSelectAllCheckboxLabelPresentRoles()).isTrue();
-	}
+        assertThat(isSelectAllCheckboxLabelPresentRoles()).isTrue();
+
+    }
+
+    @Test
+    public void shouldDisplayPhasePageEvenWhenAllRelasesHaveBeenDeleted() throws InterruptedException {
+        goLoginPage();
+
+        fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
+
+        clickOnMenuItem(MainPageAction.WYDANIA_ID);
+
+        clickOnAddButton();
+
+        fillFormInRelasesAndSubmit();
+
+        clickOnMenuItem(MainPageAction.FAZY_ID);
+
+        clickOnMenuItem(MainPageAction.WYDANIA_ID);
+
+        deleteRelase();
+
+        driver.navigate().back();
+
+        WebElement header = driver.findElement(By.className("content_title"));
+
+        Assert.assertNotNull(header);
+        Assert.assertEquals("FAZY", header.getText());
+    }
 
 }

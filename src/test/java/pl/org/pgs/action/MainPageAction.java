@@ -7,7 +7,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import static org.openqa.selenium.By.xpath;
@@ -82,7 +84,9 @@ public class MainPageAction extends AbstractAction {
     }
 
     public static void fillFormInRelasesAndSubmit() {
-        driver.findElement(By.id("name")).sendKeys("anyName");
+        Random rand = new Random();
+
+        driver.findElement(By.id("name")).sendKeys("anyName" + rand.nextInt());
 
         driver.findElement(By.id("startDate")).sendKeys("2015-06-27");
         driver.findElement(By.id("endDate")).sendKeys("2015-06-28");
@@ -115,5 +119,13 @@ public class MainPageAction extends AbstractAction {
         WebElement li = ul.findElement(By.className("button_link_li"));
         li.findElement(By.cssSelector("a")).click();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+    }
+
+    public static void deleteRelase() {
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+        driver.findElement(By.id("action_icon")).click();
+        driver.findElement(By.className("j_delete_release")).click();
+        driver.findElement(By.className("ui-button-text")).click();
     }
 }
