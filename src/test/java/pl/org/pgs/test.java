@@ -8,6 +8,11 @@ import static pl.org.pgs.action.LoginAction.fillLoginFormularAndSubmit;
 import static pl.org.pgs.action.LoginAction.goLoginPage;
 import static pl.org.pgs.action.LoginAction.goWrongLoginPage;
 import static pl.org.pgs.action.LoginAction.submitLogin;
+import static pl.org.pgs.action.MainPageAction.clickOnAddButton;
+import static pl.org.pgs.action.MainPageAction.clickOnMenuItem;
+import static pl.org.pgs.action.MainPageAction.deleteRelase;
+import static pl.org.pgs.action.MainPageAction.fillFormInRelasesAndSubmit;
+import static pl.org.pgs.action.MainPageAction.fillPhaseFormularAndSubmit;
 import static pl.org.pgs.action.MainPageAction.goEnviromentsListPage;
 import static pl.org.pgs.action.MainPageAction.goRoleListPage;
 import static pl.org.pgs.action.MainPageAction.goToEditViewOfFirstRole;
@@ -17,15 +22,19 @@ import static pl.org.pgs.util.LoginPage.isBackButtonPresent;
 import static pl.org.pgs.util.LoginPage.isRecoveryPasswordCaptchaCorrectMessage;
 import static pl.org.pgs.util.MainPage.isMainPageLoaded;
 import static pl.org.pgs.util.MainPage.isSelectAllCheckboxLabelPresentRoles;
+import junit.framework.Assert;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import pl.org.pgs.action.AbstractAction;
 import pl.org.pgs.action.DriverOperator;
+import pl.org.pgs.action.MainPageAction;
 
 public class test {
 
@@ -51,7 +60,8 @@ public class test {
 
 		goLoginPage();
 
-		fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
+		fillLoginFormularAndSubmit(data.getAdminLogin(),
+				data.getAdminPassword());
 
 		assertThat(isMainPageLoaded()).isTrue();
 	}
@@ -61,13 +71,17 @@ public class test {
 
 		goLoginPage();
 
-		fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
-		fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
-		fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
+		fillLoginFormularAndSubmit(data.getWrongLogin(),
+				data.getWrongPassword());
+		fillLoginFormularAndSubmit(data.getWrongLogin(),
+				data.getWrongPassword());
+		fillLoginFormularAndSubmit(data.getWrongLogin(),
+				data.getWrongPassword());
 
 		fillCaptcha("");
 
-		fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
+		fillLoginFormularAndSubmit(data.getAdminLogin(),
+				data.getAdminPassword());
 
 		assertThat(isMainPageLoaded()).isFalse();
 	}
@@ -85,7 +99,8 @@ public class test {
 
 		goLoginPage();
 
-		fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
+		fillLoginFormularAndSubmit(data.getAdminLogin(),
+				data.getAdminPassword());
 
 		goEnviromentsListPage();
 
@@ -97,13 +112,17 @@ public class test {
 
 		goLoginPage();
 
-		fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
-		fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
-		fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
+		fillLoginFormularAndSubmit(data.getWrongLogin(),
+				data.getWrongPassword());
+		fillLoginFormularAndSubmit(data.getWrongLogin(),
+				data.getWrongPassword());
+		fillLoginFormularAndSubmit(data.getWrongLogin(),
+				data.getWrongPassword());
 
 		goLoginPage();
 
-		fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
+		fillLoginFormularAndSubmit(data.getAdminLogin(),
+				data.getAdminPassword());
 
 		assertThat(isMainPageLoaded()).isFalse();
 	}
@@ -137,6 +156,32 @@ public class test {
 		submitLogin();
 
 		assertThat(areOnlyTwoErrorMessagesPresent()).isTrue();
+
+	}
+
+	@Test
+	public void shouldNotAvoidToSetDateOfFaseAfterReleaseDateID244()
+			throws InterruptedException {
+
+		goLoginPage();
+
+		fillLoginFormularAndSubmit(data.getAdminLogin(),
+				data.getAdminPassword());
+
+		clickOnMenuItem(MainPageAction.WYDANIA_ID);
+
+		clickOnAddButton();
+
+		fillFormInRelasesAndSubmit();
+
+		clickOnMenuItem(MainPageAction.FAZY_ID);
+
+		clickOnAddButton();
+
+		fillPhaseFormularAndSubmit();
+
+		WebElement infoBox = driver.findElement(By.id("j_info_box"));
+		assertThat(infoBox).isNotNull();
 	}
 
 	@Test
@@ -144,13 +189,43 @@ public class test {
 
 		goLoginPage();
 
-		fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
+		fillLoginFormularAndSubmit(data.getAdminLogin(),
+				data.getAdminPassword());
 
 		goRoleListPage();
 
 		goToEditViewOfFirstRole();
 
 		assertThat(isSelectAllCheckboxLabelPresentRoles()).isTrue();
+
+	}
+
+	@Test
+	public void shouldDisplayPhasePageEvenWhenAllRelasesHaveBeenDeleted()
+			throws InterruptedException {
+		goLoginPage();
+
+		fillLoginFormularAndSubmit(data.getAdminLogin(),
+				data.getAdminPassword());
+
+		clickOnMenuItem(MainPageAction.WYDANIA_ID);
+
+		clickOnAddButton();
+
+		fillFormInRelasesAndSubmit();
+
+		clickOnMenuItem(MainPageAction.FAZY_ID);
+
+		clickOnMenuItem(MainPageAction.WYDANIA_ID);
+
+		deleteRelase();
+
+		driver.navigate().back();
+
+		WebElement header = driver.findElement(By.className("content_title"));
+
+		Assert.assertNotNull(header);
+		Assert.assertEquals("FAZY", header.getText());
 	}
 
 	@Test
@@ -160,12 +235,14 @@ public class test {
 
 		goLoginPage();
 
-		fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
+		fillLoginFormularAndSubmit(data.getAdminLogin(),
+				data.getAdminPassword());
 
 		// driver.manage().getCookies().stream().filter((c) ->
 		// c.isHttpOnly()).forEach((c) -> System.out.println(c.toString()));
 
-		assertThat(driver.manage().getCookieNamed("FrameProfile").isHttpOnly()).isTrue();
+		assertThat(driver.manage().getCookieNamed("FrameProfile").isHttpOnly())
+				.isTrue();
 	}
 
 }
