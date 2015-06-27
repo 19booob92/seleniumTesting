@@ -17,127 +17,159 @@ import static pl.org.pgs.util.LoginPage.isBackButtonPresent;
 import static pl.org.pgs.util.LoginPage.isRecoveryPasswordCaptchaCorrectMessage;
 import static pl.org.pgs.util.MainPage.isMainPageLoaded;
 import static pl.org.pgs.util.MainPage.isSelectAllCheckboxLabelPresentRoles;
+import static pl.org.pgs.action.MainPageAction.clickOnMenuItem;
+import static pl.org.pgs.action.MainPageAction.clickOnAddButton;
+import static pl.org.pgs.action.MainPageAction.fillFormInRelasesAndSubmit;
+import static pl.org.pgs.action.MainPageAction.fillPhaseFormularAndSubmit;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import pl.org.pgs.action.AbstractAction;
 import pl.org.pgs.action.DriverOperator;
+import pl.org.pgs.action.MainPageAction;
 
 public class test {
 
-	WebDriver driver;
-	// IData data = MrBuggyData.getInstance();
+    WebDriver driver;
+    IData data = MrBuggyData.getInstance();
 
-	IData data = TeatAreaData.getInstance();
+    // IData data = TeatAreaData.getInstance();
 
-	@Before
-	public void setUp() {
-		driver = new FirefoxDriver();
-		AbstractAction.setData(data);
-		DriverOperator.setDriver(driver);
-	}
+    @Before
+    public void setUp() {
+        driver = new FirefoxDriver();
+        AbstractAction.setData(data);
+        DriverOperator.setDriver(driver);
+    }
 
-	@After
-	public void tearDown() {
-		driver.quit();
-	}
+    @After
+    public void tearDown() {
+        driver.quit();
+    }
 
-	// @Test
-	public void shouldLoginSuccessfully() {
+    // @Test
+    public void shouldLoginSuccessfully() {
 
-		goLoginPage();
+        goLoginPage();
 
-		fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
+        fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
 
-		assertThat(isMainPageLoaded()).isTrue();
-	}
+        assertThat(isMainPageLoaded()).isTrue();
+    }
 
-	@Test
-	public void shouldNotLoginAfter3FailsWithoutCaptchaID268() {
+    @Test
+    public void shouldNotLoginAfter3FailsWithoutCaptchaID268() {
 
-		goLoginPage();
+        goLoginPage();
 
-		fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
-		fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
-		fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
+        fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
+        fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
+        fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
 
-		fillCaptcha("");
+        fillCaptcha("");
 
-		fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
+        fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
 
-		assertThat(isMainPageLoaded()).isFalse();
-	}
+        assertThat(isMainPageLoaded()).isFalse();
+    }
 
-	@Test
-	public void shoulReturn404StatusID272() {
+    @Test
+    public void shoulReturn404StatusID272() {
 
-		goWrongLoginPage();
+        goWrongLoginPage();
 
-		assertThat(isMainPageLoaded()).isFalse();
-	}
+        assertThat(isMainPageLoaded()).isFalse();
+    }
 
-	@Test
-	public void shoulSortEnviromentByDescriptionID218() {
+    @Test
+    public void shoulSortEnviromentByDescriptionID218() {
 
-		goLoginPage();
+        goLoginPage();
 
-		fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
+        fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
 
-		goEnviromentsListPage();
+        goEnviromentsListPage();
 
-		assertThat(sortByDescriptionPossible()).isFalse();
-	}
+        assertThat(sortByDescriptionPossible()).isFalse();
+    }
 
-	@Test
-	public void shouldNotLoginAfter3FailsWithoutCaptchaAfterChangingUrlID269() {
+    @Test
+    public void shouldNotLoginAfter3FailsWithoutCaptchaAfterChangingUrlID269() {
 
-		goLoginPage();
+        goLoginPage();
 
-		fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
-		fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
-		fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
+        fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
+        fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
+        fillLoginFormularAndSubmit(data.getWrongLogin(), data.getWrongPassword());
 
-		goLoginPage();
+        goLoginPage();
 
-		fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
+        fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
 
-		assertThat(isMainPageLoaded()).isFalse();
-	}
+        assertThat(isMainPageLoaded()).isFalse();
+    }
 
-	@Test
-	public void shouldBeCorrectMessageAtRememberPasswordCaptchaID280() {
+    @Test
+    public void shouldBeCorrectMessageAtRememberPasswordCaptchaID280() {
 
-		goLoginPage();
+        goLoginPage();
 
-		clickRemindPassword();
-		clickRecoverPassword();
+        clickRemindPassword();
+        clickRecoverPassword();
 
-		assertThat(isRecoveryPasswordCaptchaCorrectMessage()).isTrue();
-	}
+        assertThat(isRecoveryPasswordCaptchaCorrectMessage()).isTrue();
+    }
 
-	@Test
-	public void shouldBeBackButtonID290() {
+    @Test
+    public void shouldBeBackButtonID290() {
 
-		goLoginPage();
+        goLoginPage();
 
-		clickRemindPassword();
+        clickRemindPassword();
 
-		assertThat(isBackButtonPresent()).isTrue();
-	}
+        assertThat(isBackButtonPresent()).isTrue();
+    }
 
-	@Test
-	public void shouldWrongMessageNotBePresentID260() {
+    @Test
+    public void shouldWrongMessageNotBePresentID260() {
 
-		goLoginPage();
+        goLoginPage();
 
-		submitLogin();
+        submitLogin();
 
-		assertThat(areOnlyTwoErrorMessagesPresent()).isTrue();
-	}
+        assertThat(areOnlyTwoErrorMessagesPresent()).isTrue();
+
+    }
+
+    @Test
+    public void shouldNotAvoidToSetDateOfFaseAfterReleaseDateID244() throws InterruptedException {
+
+        goLoginPage();
+
+        fillLoginFormularAndSubmit(data.getAdminLogin(), data.getAdminPassword());
+
+        clickOnMenuItem(MainPageAction.WYDANIA_ID);
+
+        clickOnAddButton();
+
+        fillFormInRelasesAndSubmit();
+
+        clickOnMenuItem(MainPageAction.FAZY_ID);
+
+        clickOnAddButton();
+
+        fillPhaseFormularAndSubmit();
+
+        WebElement infoBox = driver.findElement(By.id("j_info_box"));
+        assertThat(infoBox).isNotNull();
+    }
+
 
 	@Test
 	public void shouldBeLabbelSelectAllID294() {
