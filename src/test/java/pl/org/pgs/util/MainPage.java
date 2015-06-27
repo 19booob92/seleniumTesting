@@ -28,7 +28,7 @@ public class MainPage extends DriverOperator {
 
 	public static boolean isSelectAllCheckboxLabelPresentRoles() {
 
-		WebDriverWait wait = new WebDriverWait(driver, 3);
+		WebDriverWait wait = new WebDriverWait(driver, 10);
 
 		WebElement element = null;
 
