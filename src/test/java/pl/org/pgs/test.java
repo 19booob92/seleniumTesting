@@ -2,7 +2,10 @@ package pl.org.pgs;
 
 import static pl.org.pgs.action.LoginAction.fillCaptcha;
 import static pl.org.pgs.action.LoginAction.goLoginPage;
+import static pl.org.pgs.action.LoginAction.goWrongLoginPage;
 import static pl.org.pgs.action.LoginAction.login;
+import static pl.org.pgs.action.MainPageAction.goEnviromentsListPage;
+import static pl.org.pgs.action.MainPageAction.sortByDescriptionPossible;
 import static pl.org.pgs.util.MainPage.isMainPageLoaded;
 
 import org.assertj.core.api.Assertions;
@@ -12,7 +15,7 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import pl.org.pgs.action.LoginAction;
+import pl.org.pgs.action.AbstractAction;
 
 public class test {
 
@@ -24,7 +27,7 @@ public class test {
 	@Before
 	public void setUp() {
 		driver = new FirefoxDriver();
-		LoginAction.setIData(data);
+		AbstractAction.setIData(data);
 	}
 
 	@After
@@ -60,9 +63,21 @@ public class test {
 	@Test
 	public void shoulReturn404StatusID272() {
 
-		LoginAction.goWrongLoginPage(driver);
+		goWrongLoginPage(driver);
 
 		Assertions.assertThat(isMainPageLoaded(driver)).isFalse();
+
+	}
+
+	@Test
+	public void shoulSortEnviromentByDescriptionID218() {
+
+		goLoginPage(driver);
+		login(driver, data.getAdminLogin(), data.getAdminPassword());
+
+		goEnviromentsListPage(driver);
+
+		Assertions.assertThat(sortByDescriptionPossible(driver)).isFalse();
 
 	}
 

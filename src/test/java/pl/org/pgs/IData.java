@@ -14,4 +14,8 @@ public interface IData {
 	public default String getWrongPassword() {
 		return "aaa";
 	}
+
+	public default String getEnviromentsListUrl() {
+		return getUrl() + "/environments";
+	}
 }

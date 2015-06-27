@@ -4,11 +4,7 @@ import static org.openqa.selenium.By.id;
 
 import org.openqa.selenium.WebDriver;
 
-import pl.org.pgs.IData;
-
-public class LoginAction {
-
-	private static IData data;
+public class LoginAction extends AbstractAction {
 
 	public static void login(WebDriver driver, String login, String password) {
 
@@ -35,9 +31,5 @@ public class LoginAction {
 	public static void goLoginPage(WebDriver driver) {
 
 		driver.get(data.getLoginUrl());
-	}
-
-	public static void setIData(IData d) {
-		data = d;
 	}
 }
